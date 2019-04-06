@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:local="*"
+	enterFrame="enterFrame();"
+	resize="resize();"
+	creationComplete="creationComplete();" xmlns:My3D="My3D.*">
+	
+	<My3D:Display3D id="display3D" name="display3D"
+		width="100%" height="100%"
+		enterFrame="display3D.render();" />
+	
+	<mx:Script>
+		<![CDATA[
+		
+			import My3D.*;
+			
+			private function creationComplete():void {
+				display3D.addThing3D(Global.thing3D);
+				
+				resize();
+			}
+			
+			private function enterFrame():void {
+				render();
+			}
+			
+			private function resize():void {
+				render();
+			}
+			
+			private function render():void {
+				graphics.clear();
+				
+				rx += 1;
+				ry += 1;
+				rz += 1;
+				
+				rx %= 360;
+				ry %= 360;
+				rz %= 360;
+				
+				//tz += 15;
+				
+				Global.thing3D.rotate(rx, ry, rz);
+				Global.thing3D.scale(sx, sy, sz);
+				Global.thing3D.transpose(tx, ty, tz);
+			}
+			
+			// testing...
+			private var rx:Number = 0;
+			private var ry:Number = 0;
+			private var rz:Number = 0;
+			
+			private var sx:Number = 1;
+			private var sy:Number = 1;
+			private var sz:Number = 1;
+			
+			private var tx:Number = 0;
+			private var ty:Number = 0;
+			private var tz:Number = 0;
+			
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

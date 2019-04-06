@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	creationComplete="creationComplete();"
+	enterFrame="enterFrame();"
+	resize="resize();">
+	
+	<mx:VBox name="inputVBox" id="inputVBox"
+		width="100%" height="100%">
+		<mx:VBox name="axisVBox" id="axisVBox"
+			width="100%">
+			<mx:Label name="axisLabel" id="axisLabel"
+				width="100%"
+				fontWeight="bold"
+				text="Axis..." />
+			<mx:HBox name="xAxisHBox" id="xAxisHBox"
+				width="100%">
+				<mx:Label name="xAxisLabel" id="xAxisLabel"
+					width="50%"
+					text="X Axis:  " />
+				<mx:TextInput name="xAxisTextInput" id="xAxisTextInput"
+					width="50%"
+					enter="Global.shape3D.setAxis(new Axis3D(parseFloat(xAxisTextInput.text), parseFloat(yAxisTextInput.text), parseFloat(zAxisTextInput.text)));" />
+			</mx:HBox>
+			<mx:HBox name="yAxisHBox" id="yAxisHBox"
+				width="100%">
+				<mx:Label name="yAxisLabel" id="yAxisLabel"
+					width="50%"
+					text="Y Axis:  " />
+				<mx:TextInput name="yAxisTextInput" id="yAxisTextInput"
+					width="50%"
+					enter="Global.shape3D.setAxis(new Axis3D(parseFloat(xAxisTextInput.text), parseFloat(yAxisTextInput.text), parseFloat(zAxisTextInput.text)));" />
+			</mx:HBox>
+			<mx:HBox name="zAxisHBox" id="zAxisHBox"
+				width="100%">
+				<mx:Label name="zAxisLabel" id="zAxisLabel"
+					width="50%"
+					text="Z Axis:  " />
+				<mx:TextInput name="zAxisTextInput" id="zAxisTextInput"
+					width="50%"
+					enter="Global.shape3D.setAxis(new Axis3D(parseFloat(xAxisTextInput.text), parseFloat(yAxisTextInput.text), parseFloat(zAxisTextInput.text)));" />
+			</mx:HBox>
+		</mx:VBox>
+		<mx:VBox name="angleVBox" id="angleVBox"
+			width="100%">
+			<mx:Label name="angleLabel" id="angleLabel"
+				width="100%"
+				fontWeight="bold"
+				text="Angle..." />
+			<mx:HBox name="xAngleHBox" id="xAngleHBox"
+				width="100%">
+				<mx:Label name="xAngleLabel" id="xAngleLabel"
+					width="50%"
+					text="X Angle:  " />
+				<mx:TextInput name="xAngleTextInput" id="xAngleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="xAngleTextInput.text = xAngleHSlider.value.toString();" />
+			</mx:HBox>
+			<mx:HSlider name="xAngleHSlide" id="xAngleHSlider"
+				width="100%"
+				maximum="360" minimum="0"
+				creationComplete="xAngleHSlider.value = 0;"
+				change="Global.shape3D.rotate(xAngleHSlider.value, yAngleHSlider.value, zAngleHSlider.value);
+						xAngleHSlider.value = xAngleHSlider.value % 360;" />
+			<mx:HBox name="yAngleHBox" id="yAngleHBox"
+				width="100%">
+				<mx:Label name="yAngleLabel" id="yAngleLabel"
+					width="50%"
+					text="Y Angle:  " />
+				<mx:TextInput name="yAngleTextInput" id="yAngleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="yAngleTextInput.text = yAngleHSlider.value.toString();" />
+			</mx:HBox>
+			<mx:HSlider name="yAngleHSlide" id="yAngleHSlider"
+				width="100%"
+				maximum="360" minimum="0"
+				creationComplete="yAngleHSlider.value = 0;"
+				change="Global.shape3D.rotate(xAngleHSlider.value, yAngleHSlider.value, zAngleHSlider.value);
+						yAngleHSlider.value = yAngleHSlider.value % 360;" />
+			<mx:HBox name="zAngleHBox" id="zAngleHBox"
+				width="100%">
+				<mx:Label name="zAngleLabel" id="zAngleLabel"
+					width="50%"
+					text="Z Angle:  " />
+				<mx:TextInput name="zAngleTextInput" id="zAngleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="zAngleTextInput.text = zAngleHSlider.value.toString();" />
+			</mx:HBox>
+			<mx:HSlider name="zAngleHSlide" id="zAngleHSlider"
+				width="100%"
+				maximum="360" minimum="0"
+				creationComplete="zAngleHSlider.value = 0;"
+				change="Global.shape3D.rotate(xAngleHSlider.value, yAngleHSlider.value, zAngleHSlider.value);
+						zAngleHSlider.value = zAngleHSlider.value % 360;" />
+		</mx:VBox>
+		<mx:VBox name="translateVBox" id="translateVBox"
+			width="100%">
+			<mx:Label name="translateLabel" id="translateLabel"
+				width="100%"
+				fontWeight="bold"
+				text="Translate..." />
+			<mx:HBox name="xTranslateHBox" id="xTranslateHBox"
+				width="100%">
+				<mx:Label name="xTranslateLabel" id="xTranslateLabel"
+					width="50%"
+					text="X Translate:  " />
+				<mx:TextInput name="xTranslateTextInput" id="xTranslateTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="xTranslateTextInput.text = xTranslationHSlider.value.toString();"/>
+			</mx:HBox>
+			<mx:HSlider name="xTranslationHSlide" id="xTranslationHSlider"
+				width="100%"
+				minimum="-500" maximum="500"
+				creationComplete="xTranslationHSlider.value = 0;"
+				change="Global.shape3D.transpose(xTranslationHSlider.value, yTranslationHSlider.value, zTranslationHSlider.value);" />
+			<mx:HBox name="yTranslateHBox" id="yTranslateHBox"
+				width="100%">
+				<mx:Label name="yTranslateLabel" id="yTranslateLabel"
+					width="50%"
+					text="Y Translate:  " />
+				<mx:TextInput name="yTranslateTextInput" id="yTranslateTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="yTranslateTextInput.text = yTranslationHSlider.value.toString();" />
+			</mx:HBox>
+			<mx:HSlider name="yTranslationHSlide" id="yTranslationHSlider"
+				width="100%"
+				minimum="-500" maximum="500"
+				creationComplete="yTranslationHSlider.value = 0;"
+				change="Global.shape3D.transpose(xTranslationHSlider.value, yTranslationHSlider.value, zTranslationHSlider.value);" />
+			<mx:HBox name="zTranslateBox" id="zTranslateHBox"
+				width="100%">
+				<mx:Label name="zTranslateLabel" id="zTranslateLabel"
+					width="50%"
+					text="Z Translate:  " />
+				<mx:TextInput name="zTranslateTextInput" id="zTranslateTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="zTranslateTextInput.text = zTranslationHSlider.value.toString();" />
+			</mx:HBox>
+			<mx:HSlider name="zTranslationHSlide" id="zTranslationHSlider"
+				width="100%"
+				minimum="-1000" maximum="1000"
+				creationComplete="zTranslationHSlider.value = 0;"
+				change="Global.shape3D.transpose(xTranslationHSlider.value, yTranslationHSlider.value, zTranslationHSlider.value);" />
+		</mx:VBox>
+		<mx:VBox name="scaleVBox" id="scaleVBox"
+			width="100%">
+			<mx:Label name="scaleLabel" id="scaleLabel"
+				width="100%"
+				fontWeight="bold"
+				text="Scale..." />
+			<mx:HBox name="xScaleHBox" id="xScaleHBox"
+				width="100%">
+				<mx:Label name="xScaleLabel" id="xScaleLabel"
+					width="50%"
+					text="X Scale:  " />
+				<mx:TextInput name="xScaleTextInput" id="xScaleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="xScaleTextInput.text = (xScaleHSlider.value * 100).toString() + '%';" />
+			</mx:HBox>
+			<mx:HSlider name="xScaleHSlide" id="xScaleHSlider"
+				width="100%"
+				minimum="-10" maximum="10"
+				creationComplete="xScaleHSlider.value = 1;"
+				change="Global.shape3D.scale(xScaleHSlider.value, yScaleHSlider.value, zScaleHSlider.value);" />
+			<mx:HBox name="yScaleHBox" id="yScaleHBox"
+				width="100%">
+				<mx:Label name="yScaleLabel" id="yScaleLabel"
+					width="50%"
+					text="Y Scale:  " />
+				<mx:TextInput name="yScaleTextInput" id="yScaleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="yScaleTextInput.text = (yScaleHSlider.value * 100).toString() + '%';" />
+			</mx:HBox>
+			<mx:HSlider name="yScaleHSlide" id="yScaleHSlider"
+				width="100%"
+				minimum="-10" maximum="10"
+				creationComplete="yScaleHSlider.value = 1;"
+				change="Global.shape3D.scale(xScaleHSlider.value, yScaleHSlider.value, zScaleHSlider.value);" />
+			<mx:HBox name="zScaleBox" id="zScaleHBox"
+				width="100%">
+				<mx:Label name="zScaleLabel" id="zScaleLabel"
+					width="50%"
+					text="Z Scale:  " />
+				<mx:TextInput name="zScaleTextInput" id="zScaleTextInput"
+					width="50%"
+					editable="false"
+					enterFrame="zScaleTextInput.text = (zScaleHSlider.value * 100).toString() + '%';" />
+			</mx:HBox>
+			<mx:HSlider name="zScaleHSlide" id="zScaleHSlider"
+				width="100%"
+				minimum="-10" maximum="10"
+				creationComplete="zScaleHSlider.value = 1;"
+				change="Global.shape3D.scale(xScaleHSlider.value, yScaleHSlider.value, zScaleHSlider.value);" />
+		</mx:VBox>
+		<mx:Button name="resetButton" id="resetButton"
+			width="100%"
+			label="Reset All"
+			click="Global.resetAll();" />
+		<mx:TextArea name="debugTextArea" id="debugTextArea"
+			editable="false"
+			width="100%" height="200" />
+	</mx:VBox>
+	
+	<mx:Script>
+		<![CDATA[
+			import My3D.Axis3D;
+			
+			private function creationComplete():void {
+				resize();
+			}
+			
+			private function enterFrame():void {
+				// empty body
+			}
+			
+			private function resize():void {
+				render();
+			}
+			
+			private function render():void {
+				// empty body
+			}
+		]]>
+	</mx:Script>
+	
+</mx:Canvas>

@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:local="*" xmlns:My3D="My3D.*"
+	layout="absolute"
+	frameRate="15"
+	x="0" y="0"
+	width="100%" height="100%"
+	creationComplete="creationComplete();"
+	enterFrame="enterFrame();"
+	backgroundColor="0xffffff">
+	
+	<mx:VBox
+		width="100%" height="100%"
+		borderColor="0x000000" borderStyle="solid" borderThickness="1">
+		
+		<mx:HBox
+			width="100%" height="75%"
+			borderColor="0x000000" borderStyle="solid" borderThickness="1">
+			
+			<mx:VBox
+				width="25%" height="100%"
+				borderColor="0x000000" borderStyle="solid" borderThickness="1">
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					textAlign="center"
+					text="My 3D Engine Tester" />
+					
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Object..." />
+					
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="Name:" />
+						
+					<mx:ComboBox
+						name="objectNameComboBox" id="objectNameComboBox"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						editable="true"
+						width="50%"
+						dataProvider="{objectArrayCollection}"
+						
+						change="try {currentObject = Object3D(ComboBox(event.target).selectedItem); resetFeilds();} catch (error:Error) {addError(error);}" />
+						
+					<mx:Button
+						width="15%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						label="+"
+						click="try {addNewObject(); resetFeilds();} catch (error:Error) {addError(error);}" />
+						
+					<mx:Button
+						width="15%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						label="-"
+						click="try {removeCurrentObject(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="Shape:" />
+						
+					<mx:ComboBox
+						name="shapeComboBox" id="shapeComboBox"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						editable="false"
+						width="80%"
+						dataProvider="{shapeArrayCollection}"
+						change="try {changeShape(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Dimensions..." />
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="40%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="Width:" />
+						
+					<mx:TextInput
+						name="widthTextInput" id="widthTextInput"
+						editable="false"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0" />
+						
+					<mx:HSlider
+						name="widthSlider" id="widthSlider"
+						width="40%"
+						minimum="0" maximum="500"
+						change="try {changeDimensions(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="40%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="Height:" />
+						
+					<mx:TextInput
+						name="heightTextInput" id="heightTextInput"
+						editable="false"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0" />
+						
+					<mx:HSlider
+						name="heightSlider" id="heightSlider"
+						width="40%"
+						minimum="0" maximum="500"
+						change="try {changeDimensions(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="40%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="Length:" />
+						
+					<mx:TextInput
+						name="lengthTextInput" id="lengthTextInput"
+						editable="false"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0" />
+						
+					<mx:HSlider
+						name="lengthSlider" id="lengthSlider"
+						width="40%"
+						minimum="0" maximum="500"
+						change="try {changeDimensions(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Axis..." />
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="10%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="x:" />
+						
+					<mx:TextInput
+						name="xAxisTextInput" id="xAxisTextInput"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0"
+						change="try {changeAxis(); resetFeilds();} catch (error:Error) {addError(error);}" />
+						
+					<mx:Label
+						width="10%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="y:" />
+						
+					<mx:TextInput
+						name="yAxisTextInput" id="yAxisTextInput"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0"
+						change="try {changeAxis(); resetFeilds();} catch (error:Error) {addError(error);}" />
+						
+					<mx:Label
+						width="10%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="z:" />
+						
+					<mx:TextInput
+						name="zAxisTextInput" id="zAxisTextInput"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						width="20%"
+						restrict="0-9"
+						text="0"
+						change="try {changeAxis(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Rotate on..." />
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="x Axis:" />
+						
+					<mx:TextInput
+						name="xRotateTextInput" id="xRotateTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0"
+						editable="false" />
+						
+					<mx:HSlider
+						name="xRotateSlider" id="xRotateSlider"
+						minimum="-10" maximum="10" 
+						change="try {changeRotation(); resetFeilds();} catch (error:Error) {addError(error);}"
+						width="60%" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="y Axis:" />
+						
+					<mx:TextInput
+						name="yRotateTextInput" id="yRotateTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0" />
+						
+					<mx:HSlider
+						name="yRotateSlider" id="yRotateSlider"
+						minimum="-10" maximum="10"
+						change="try {changeRotation(); resetFeilds();} catch (error:Error) {addError(error);}"
+						width="60%" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="z Axis:" />
+						
+					<mx:TextInput
+						name="zRotateTextInput" id="zRotateTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0" />
+						
+					<mx:HSlider
+						name="zRotateSlider" id="zRotateSlider"
+						minimum="-10" maximum="10" 
+						change="try {changeRotation(); resetFeilds();} catch (error:Error) {addError(error);}"
+						width="60%" />
+					
+				</mx:HBox>
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Transpose on..." />
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="x Axis:" />
+						
+					<mx:TextInput
+						name="xTransposeTextInput" id="xTransposeTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0"
+						editable="false" />
+						
+					<mx:HSlider
+						id="xTransposeSlider" name="xTrnaposeSlider"
+						minimum="-500" maximum="500"
+						width="60%"
+						change="try {changeTranspose(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="y Axis:" />
+						
+					<mx:TextInput
+						name="yTransposeTextInput" id="yTransposeTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0"
+						editable="false" />
+						
+					<mx:HSlider
+						name="yTransposeSlider" id="yTransposeSlider"
+						minimum="-500" maximum="500"
+						width="60%"
+						change="try {changeTranspose(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="z Axis:" />
+						
+					<mx:TextInput
+						name="zTransposeTextInput" id="zTransposeTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="0"
+						editable="false" />
+						
+					<mx:HSlider
+						name="zTransposeSlider" id="zTransposeSlider"
+						minimum="-500" maximum="500"
+						width="60%"
+						change="try {changeTranspose(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:Label
+					width="100%"
+					fontSize="12" fontFamily="Arial" color="0x000000" fontWeight="bold"
+					text="Scale on..." />
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="x Axis:" />
+						
+					<mx:TextInput
+						name="xScaleTextInput" id="xScaleTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="1"
+						editable="false" />
+						
+					<mx:HSlider
+						name="xScaleSlider" id="xScaleSlider"
+						minimum="-10" maximum="10"
+						width="60%"
+						change="try {changeScale(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="y Axis:" />
+						
+					<mx:TextInput
+						name="yScaleTextInput" id="yScaleTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="1"
+						editable="false" />
+						
+					<mx:HSlider
+						name="yScaleSlider" id="yScaleSlider"
+						minimum="-10" maximum="10"
+						width="60%"
+						change="try {changeScale(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+				<mx:HBox
+					width="100%">
+					
+					<mx:Label
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						text="z Axis:" />
+						
+					<mx:TextInput
+						name="zScaleTextInput" id="zScaleTextInput"
+						width="20%"
+						fontSize="12" fontFamily="Arial" color="0x000000"
+						restrict="0-9"
+						text="1"
+						editable="false" />
+						
+					<mx:HSlider
+						name="zScaleSlider" id="zScaleSlider"
+						minimum="-10" maximum="10"
+						width="60%"
+						change="try {changeScale(); resetFeilds();} catch (error:Error) {addError(error);}" />
+					
+				</mx:HBox>
+				
+			</mx:VBox>
+			
+			<My3D:Display3D 
+				name="display3D" id="display3D"
+				width="100%" height="100%"
+				borderColor="0x000000" borderStyle="solid" borderThickness="1"
+				enterFrame="try {display3D.render();} catch (error:Error) {addError(error);}" />
+			
+		</mx:HBox>
+		
+		<mx:VBox
+			width="100%" height="25%"
+			name="debugVBox" id="debugVBox"
+			borderColor="0x000000" borderStyle="solid" borderThickness="1">
+			
+			<mx:Label
+				fontSize="12" fontFamily="Arial" fontWeight="bold" color="0x000000"
+				text="Errors..." />
+			
+		</mx:VBox>
+		
+	</mx:VBox>
+		
+	<mx:Script>
+		<![CDATA[
+			import My3D.Geometry3D.Axis3D;
+			import mx.controls.Label;
+		
+			import mx.controls.ComboBox;
+			import mx.collections.ArrayCollection;
+		
+			import My3D.Renderable3D.Thing3D.*;
+			import My3D.*;
+			
+			private function creationComplete():void {
+				instance = this;
+				
+				shapeArrayCollection.addItem(Object3D.CUBE);
+				shapeArrayCollection.addItem(Object3D.PYRAMID);
+				shapeArrayCollection.addItem(Object3D.GANGLEON);
+				shapeArrayCollection.addItem(Object3D.ODDITY);
+				shapeArrayCollection.addItem(Object3D.SCRIBBLE);
+				
+				addNewObject();
+				
+				currentObject.setWidth(100);
+				currentObject.setHeight(100);
+				currentObject.setLength(100);
+				
+				currentObject.setXRotate(1.5);
+				currentObject.setYRotate(1.5);
+				currentObject.setZRotate(1.5);
+				
+				resetFeilds();
+			}
+			
+			private function enterFrame():void {
+				try {
+					for each (var object3D:Object3D in objectArrayCollection) {
+						object3D.enterFrame();
+					}
+				} catch (error:Error) {
+					addError(error);
+				}
+			}
+			
+			private function resetFeilds():void {
+				objectNameComboBox.selectedItem = currentObject;
+				
+				shapeComboBox.selectedItem = currentObject.getShape();
+				
+				widthTextInput.text = currentObject.getWidth().toString();
+				heightTextInput.text = currentObject.getHeight().toString();
+				lengthTextInput.text = currentObject.getLength().toString();
+					
+				widthSlider.value = currentObject.getWidth();
+				heightSlider.value = currentObject.getHeight();
+				lengthSlider.value = currentObject.getLength();
+				
+				xAxisTextInput.text = currentObject.getAxis().xAxis.toString();
+				yAxisTextInput.text = currentObject.getAxis().yAxis.toString();
+				zAxisTextInput.text = currentObject.getAxis().zAxis.toString();
+				
+				xRotateTextInput.text = currentObject.getXRotate().toString();
+				yRotateTextInput.text = currentObject.getYRotate().toString();
+				zRotateTextInput.text = currentObject.getZRotate().toString();
+				
+				xRotateSlider.value = currentObject.getXRotate();
+				yRotateSlider.value = currentObject.getYRotate();
+				zRotateSlider.value = currentObject.getZRotate();
+				
+				xTransposeTextInput.text = currentObject.getXTranspose().toString();
+				yTransposeTextInput.text = currentObject.getYTranspose().toString();
+				zTransposeTextInput.text = currentObject.getZTranspose().toString();
+				
+				xTransposeSlider.value = currentObject.getXTranspose();
+				yTransposeSlider.value = currentObject.getYTranspose();
+				zTransposeSlider.value = currentObject.getZTranspose();
+				
+				xScaleTextInput.text = currentObject.getXScale().toString();
+				yScaleTextInput.text = currentObject.getYScale().toString();
+				zScaleTextInput.text = currentObject.getZScale().toString();
+				
+				xScaleSlider.value = currentObject.getXScale();
+				yScaleSlider.value = currentObject.getYScale();
+				zScaleSlider.value = currentObject.getZScale();
+			}
+			
+			private function addError(error:Error):void {
+				var label:Label = new Label();
+				
+				label.setStyle("fontSize", 12);
+				label.setStyle("fontFamily", "Arial");
+				label.setStyle("color", 0xff0000);
+				
+				label.text = error.message;
+				label.toolTip = error.getStackTrace();
+				
+				debugVBox.addChild(label);
+				
+				throw error;
+			}
+			
+			private function addNewObject():void {
+				var object3D:Object3D = new Object3D("My Object" + (objectArrayCollection.length + 1).toString(), Object3D.DEFAULT);
+				
+				objectArrayCollection.addItem(object3D);
+				
+				currentObject = object3D;
+			}
+			
+			private function removeCurrentObject():void {
+				display3D.removeRenderable3D(currentObject.getThing3D());
+				objectArrayCollection.removeItemAt(objectArrayCollection.getItemIndex(currentObject));
+				
+				if (objectArrayCollection.length <= 0) {
+					addNewObject();
+				} else {
+					currentObject = Object3D(objectArrayCollection.getItemAt(0));
+				}
+			}
+			
+			private function changeShape():void {
+				currentObject.setShape(String(shapeComboBox.selectedItem));
+			}
+			
+			private function changeDimensions():void {
+				currentObject.setWidth(Number(widthSlider.value));
+				currentObject.setHeight(Number(heightSlider.value));
+				currentObject.setLength(Number(lengthSlider.value));
+			}
+			
+			private function changeAxis():void {
+				currentObject.setAxis(new Axis3D(parseFloat(xAxisTextInput.text), parseFloat(yAxisTextInput.text), parseFloat(zAxisTextInput.text)));
+			}
+			
+			private function changeRotation():void {
+				currentObject.setXRotate(xRotateSlider.value);
+				currentObject.setYRotate(yRotateSlider.value);
+				currentObject.setZRotate(zRotateSlider.value);
+			}
+			
+			private function changeTranspose():void {
+				currentObject.setXTranspose(xTransposeSlider.value);
+				currentObject.setYTranspose(yTransposeSlider.value);
+				currentObject.setZTranspose(zTransposeSlider.value);
+			}
+			
+			private function changeScale():void {
+				currentObject.setXScale(xScaleSlider.value);
+				currentObject.setYScale(yScaleSlider.value);
+				currentObject.setZScale(zScaleSlider.value);
+			}
+			
+			[Bindable]
+			private var objectArrayCollection:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var shapeArrayCollection:ArrayCollection = new ArrayCollection();
+			
+			private var currentObject:Object3D = null;
+			
+			public static var instance:Main = null;
+			
+		]]>
+	</mx:Script>
+	
+</mx:Application>

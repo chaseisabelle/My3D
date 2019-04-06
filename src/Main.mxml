@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:local="*" xmlns:My3D="My3D.*"
+	layout="absolute"
+	frameRate="15"
+	x="0" y="0"
+	width="100%" height="100%"
+	creationComplete="creationComplete();"
+	enterFrame="enterFrame();"
+	backgroundColor="0xffffff">
+	
+	<mx:VBox
+		width="100%" height="100%"
+		borderColor="0x000000" borderStyle="solid" borderThickness="1">
+			
+		<My3D:Display3D 
+			name="display3D" id="display3D"
+			width="100%" height="75%"
+			borderColor="0x000000" borderStyle="solid" borderThickness="1"
+			enterFrame="try {display3D.render();} catch (error:Error) {addError(error);}" />
+		
+		<mx:VBox
+			width="100%" height="25%"
+			name="debugVBox" id="debugVBox"
+			borderColor="0x000000" borderStyle="solid" borderThickness="1">
+			
+			<mx:Label
+				fontSize="12" fontFamily="Arial" fontWeight="bold" color="0x000000"
+				text="Errors..." />
+			
+		</mx:VBox>
+		
+	</mx:VBox>
+		
+	<mx:Script>
+		<![CDATA[
+			import My3D.Geometry3D.Axis3D;
+			import mx.controls.Label;
+		
+			import mx.controls.ComboBox;
+			import mx.collections.ArrayCollection;
+		
+			import My3D.Renderable3D.Thing3D.*;
+			import My3D.*;
+			
+			private function creationComplete():void {
+				instance = this;
+			}
+			
+			private function enterFrame():void {
+				try {
+					for each (var object3D:Object3D in objectArrayCollection) {
+						object3D.enterFrame();
+					}
+				} catch (error:Error) {
+					addError(error);
+				}
+			}
+			
+			private function addError(error:Error):void {
+				var label:Label = new Label();
+				
+				label.setStyle("fontSize", 12);
+				label.setStyle("fontFamily", "Arial");
+				label.setStyle("color", 0xff0000);
+				
+				label.text = error.message;
+				label.toolTip = error.getStackTrace();
+				
+				debugVBox.addChild(label);
+				
+				throw error;
+			}
+			
+			[Bindable]
+			private var objectArrayCollection:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var shapeArrayCollection:ArrayCollection = new ArrayCollection();
+			
+			private var currentObject:Object3D = null;
+			
+			public static var instance:Main = null;
+			
+		]]>
+	</mx:Script>
+	
+</mx:Application>
